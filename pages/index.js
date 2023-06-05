@@ -2,11 +2,13 @@ import Layout, { siteTitle } from "../components/layout";
 
 import Head from "next/head";
 import Link from "next/link";
+import { getHelloData } from "../lib/api";
 import { getSortedPostsData } from "../lib/posts";
 import utilStyles from "../styles/utils.module.css";
 
 export async function getStaticProps() {
   const allPostsData = getSortedPostsData();
+
   return {
     props: {
       allPostsData,
@@ -15,6 +17,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ allPostsData }) {
+  const clientSideReq = getHelloData();
   return (
     <Layout home>
       <Head>
@@ -22,6 +25,7 @@ export default function Home({ allPostsData }) {
       </Head>
       <section className={utilStyles.headingMd}>
         <p>This is a description of me.</p>
+        <p>{clientSideReq?.text}</p>
         <Link href="/posts/first-post">visit post</Link>
       </section>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
